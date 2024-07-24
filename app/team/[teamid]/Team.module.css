@@ -1,0 +1,102 @@
+/* Team.module.css */
+
+.teamContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .teamName {
+    font-size: 2em;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #333;
+  }
+  
+  .tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .tabs button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s, color 0.3s;
+  }
+  
+  .tabs button:hover {
+    color: #0070f3;
+  }
+  
+  .tabs button.active {
+    border-bottom: 2px solid #0070f3;
+    color: #0070f3;
+  }
+  
+  .tabContent {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .detailsHeader {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  .requestList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .requestItem {
+    padding: 10px;
+    border-bottom: 1px solid #eaeaea;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .requestItem:last-child {
+    border-bottom: none;
+  }
+  
+  .button {
+    padding: 8px 16px;
+    font-size: 0.9em;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .buttonAccept {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .buttonReject {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .buttonAccept:hover {
+    background-color: #45a049;
+  }
+  
+  .buttonReject:hover {
+    background-color: #d32f2f;
+  }
+  
