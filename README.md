@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+##VexTeamLink
+VexTeamLink is a comprehensive web application designed to facilitate team management and collaboration for VEX Robotics teams. This platform includes a variety of features to help teams communicate, manage resources, and strategize for competitions.
 
-## Getting Started
+Features
+User Authentication
 
-First, run the development server:
+Firebase-based authentication system
+User profile creation and management
+Discord account linking
+Team Management
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Team verification
+Team management dashboard
+Privacy settings for profile viewing
+Communication Tools
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Team messaging
+Messaging functionality similar to Instagram DMs
+Chat feature with sent and received messages displayed
+Resource Sharing
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Upload and share robot photos and videos with specific teams
+Collaborative strategy planning
+Resource page with essential materials
+Event Management
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Scouting tools for events
+Event calendar
+Match prediction and scheduling
+Data Management
 
-## Learn More
+Data dashboard for team performance tracking
+Autonomous code repository and display
+Notebook upload feature
+Season selector to view previous seasons' robots
+Tech Stack
+Frontend
 
-To learn more about Next.js, take a look at the following resources:
+React.js with Next.js for server-side rendering
+CSS Modules for styling
+Backend
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Firebase for authentication, Firestore for database, and storage
