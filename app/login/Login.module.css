@@ -1,0 +1,74 @@
+/* Enter.module.css */
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(100vh - 2rem - 120px);
+  background: linear-gradient(135deg, #6e8efb 0%, #a777e3 100%);
+  color: #fff;
+  padding: 20px;
+}
+
+.card {
+  background: #fff;
+  color: #333;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.card h3 {
+  margin-bottom: 1rem;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.card button {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 10px;
+  transition: background 0.3s, transform 0.3s;
+  outline: none; /* Remove default focus outline */
+}
+
+.card button:hover {
+  background: linear-gradient(135deg, #0056b3 0%, #003d7a 100%);
+  transform: scale(1.05);
+}
+
+.card button:focus {
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5); /* Add focus outline */
+}
+
+.card input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 10px 0;
+  width: calc(100% - 24px);
+  font-size: 16px;
+}
+
+.card input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.card p {
+  margin-top: 10px;
+}

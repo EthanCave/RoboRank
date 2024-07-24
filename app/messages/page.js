@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { firestore, auth } from '../lib/firebase';
 import {
   collection,
@@ -15,8 +15,9 @@ import {
   getDoc,
   getDocs,
   updateDoc,
-  limit,  // Import limit function
+  limit,
 } from 'firebase/firestore';
+import debounce from 'lodash.debounce';
 import styles from './Messages.module.css';
 
 const Messages = () => {
@@ -34,6 +35,16 @@ const Messages = () => {
     return () => unsubscribe();
   }, []);
 
+  // Debounced version of updateChatsWithLastMessage
+  const debouncedUpdateChatsWithLastMessage = useCallback(
+    debounce(async (chats, user) => {
+      const updatedChats = await Promise.all(chats.map(fetchLastMessage));
+      updatedChats.sort((a, b) => (b.lastMessage.timestamp?.toDate() - a.lastMessage.timestamp?.toDate()));
+      setChats(updatedChats);
+    }, 300), // 300ms debounce
+    []
+  );
+
   useEffect(() => {
     if (user) {
       const chatsRef = collection(firestore, 'chats');
@@ -50,11 +61,12 @@ const Messages = () => {
             }
           }
           setChats(chatList);
+          debouncedUpdateChatsWithLastMessage(chatList, user);
         }
       );
       return () => unsubscribe();
     }
-  }, [user]);
+  }, [user, debouncedUpdateChatsWithLastMessage]);
 
   useEffect(() => {
     if (recipientId && user) {
@@ -150,29 +162,32 @@ const Messages = () => {
   };
 
   const fetchLastMessage = async (chat) => {
+    if (!user) return { ...chat, lastMessage: {} };
+  
     const { uid: otherUserId } = chat;
-    const lastMessageQuery = query(
+    const lastMessageQuery1 = query(
       collection(firestore, `messages/${user.uid}/${otherUserId}`),
       orderBy('timestamp', 'desc'),
       limit(1)
     );
-    const lastMessageSnapshot = await getDocs(lastMessageQuery);
-    const lastMessage = lastMessageSnapshot.docs[0]?.data() || {};
-
+    const lastMessageQuery2 = query(
+      collection(firestore, `messages/${otherUserId}/${user.uid}`),
+      orderBy('timestamp', 'desc'),
+      limit(1)
+    );
+  
+    const [lastMessageSnapshot1, lastMessageSnapshot2] = await Promise.all([
+      getDocs(lastMessageQuery1),
+      getDocs(lastMessageQuery2),
+    ]);
+  
+    const lastMessage1 = lastMessageSnapshot1.docs[0]?.data() || {};
+    const lastMessage2 = lastMessageSnapshot2.docs[0]?.data() || {};
+  
+    const lastMessage = lastMessage1.timestamp?.toDate() > lastMessage2.timestamp?.toDate() ? lastMessage1 : lastMessage2;
+  
     return { ...chat, lastMessage };
   };
-
-  useEffect(() => {
-    if (user) {
-      const updateChatsWithLastMessage = async () => {
-        const updatedChats = await Promise.all(chats.map(fetchLastMessage));
-        updatedChats.sort((a, b) => (b.lastMessage.timestamp?.toDate() - a.lastMessage.timestamp?.toDate()));
-        setChats(updatedChats);
-      };
-
-      updateChatsWithLastMessage();
-    }
-  }, [chats, user]);
 
   return (
     <div className={styles.container}>

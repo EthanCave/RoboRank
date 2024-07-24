@@ -57,7 +57,9 @@ const Navbar = () => {
 
   return (
     <div className={styles.navbar}>
-      <h1>VexTeamLink</h1>
+      <Link href="/" className={styles.logo}>
+        <h1>VexTeamLink</h1>
+      </Link>
       <form onSubmit={handleSearchSubmit} className={styles.searchForm}>
         <input
           type="text"

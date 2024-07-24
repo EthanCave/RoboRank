@@ -1,32 +1,62 @@
-/* components/Sidebar.module.css */
+/* Sidebar.module.css */
 .sidebar {
     width: 250px;
-    height: 100vh;
-    background-color: #333;
-    color: white;
-    padding: 15px;
+    height: calc(100vh - 60px); /* Adjust height to account for the height of the navbar */
+    background-color: #2c3e50; /* Darker, more modern color */
+    color: #ecf0f1; /* Light text color for contrast */
+    padding: 20px; /* Increased padding for better spacing */
     position: fixed;
+    top: 60px; /* Adjust this value to the height of the navbar */
+    left: 0;
+    box-shadow: 4px 0 8px rgba(0, 0, 0, 0.3); /* More pronounced shadow for better separation */
+    z-index: 1000; /* Ensure the sidebar is below the navbar */
+    display: flex;
+    flex-direction: column; /* Ensure items stack vertically */
   }
   
   .sidebar h2 {
-    margin-top: 0;
+    margin-top: 0; /* Remove default margin from the top of the heading */
+    font-size: 1.5rem; /* Larger heading size */
+    font-weight: 700; /* Thicker heading font weight */
+    border-bottom: 2px solid #34495e; /* Subtle underline effect */
+    padding-bottom: 10px; /* Space between heading and content */
   }
   
   .sidebar ul {
     list-style-type: none;
-    padding: 0;
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
   }
   
   .sidebar ul li {
-    margin: 10px 0;
+    margin: 15px 0; /* Increased margin for better spacing */
   }
   
   .sidebar ul li a {
-    color: white;
+    color: #ecf0f1; /* Light text color */
     text-decoration: none;
+    display: flex;
+    align-items: center; /* Center content vertically */
+    padding: 10px; /* Padding for clickable area */
+    border-radius: 4px; /* Rounded corners */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition effects */
+    font-weight: 600; /* Thicker font weight for links */
   }
   
   .sidebar ul li a:hover {
-    text-decoration: underline;
+    background-color: #34495e; /* Darker background on hover */
+    color: #fff; /* Ensures text remains readable */
+    text-decoration: none; /* Keep text decoration off */
+  }
+  
+  .sidebar ul li a img {
+    margin-right: 10px; /* Space between icon and text */
+    width: 20px; /* Adjust icon size */
+    height: 20px; /* Adjust icon size */
+  }
+  
+  .sidebar ul li a span {
+    font-size: 1rem; /* Consistent font size for items */
+    font-weight: 600; /* Thicker font weight for spans */
   }
   

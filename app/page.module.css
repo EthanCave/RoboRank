@@ -2,7 +2,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: calc(100vh - 2rem - 120px);
   font-family: 'Arial', sans-serif;
   background-color: #f4f4f4;
   color: #333;

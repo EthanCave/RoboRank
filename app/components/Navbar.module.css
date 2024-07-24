@@ -4,7 +4,7 @@
     height: 30px; /* Adjust size as needed */
     cursor: pointer;
     margin-right: 40px; /* Space between icons */
-  }
+}
 
 .navbar {
     display: flex;
@@ -13,16 +13,24 @@
     padding: 1rem;
     background-color: #333;
     color: #fff;
-  }
-  
-  .searchForm {
+    position: fixed; /* Fixed to the top */
+    top: 0;
+    left: 0;
+    width: 100%; /* Full width of the viewport */
+    z-index: 1002; /* Higher z-index to stay on top of the sidebar */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+}
+
+
+.searchForm {
     display: flex;
     align-items: center;
     flex: 1; /* Allow the form to grow */
     max-width: 600px; /* Set a max-width for the form */
-  }
-  
-  .searchInput {
+}
+
+.searchInput {
     flex: 1; /* Allow the input to grow */
     padding: 0.75rem 1rem; /* Increase padding for a larger input */
     border: 1px solid #555;
@@ -32,56 +40,55 @@
     font-size: 1rem; /* Larger font size */
     outline: none; /* Remove default outline */
     transition: border-color 0.3s; /* Smooth border color transition */
-  }
-  
-  .searchInput::placeholder {
+}
+
+.searchInput::placeholder {
     color: #bbb;
-  }
-  
-  .searchInput:focus {
+}
+
+.searchInput:focus {
     border-color: #888; /* Change border color on focus */
-  }
-  
-  .auth {
+}
+
+.auth {
     display: flex;
     align-items: center;
-  }
-  
-  .profileContainer {
+}
+
+.profileContainer {
     position: relative;
-  }
-  
-  .profilePic {
+}
+
+.profilePic {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     cursor: pointer;
-  }
-  
-  .dropdownMenu {
+}
+
+.dropdownMenu {
     position: absolute;
-    top: 100%;
+    top: 100%; /* Position the dropdown below the profile picture */
     right: 0;
     background-color: #fff;
     color: #333;
     border: 1px solid #ddd;
     border-radius: 4px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-  }
-  
-  .dropdownMenu a,
-  .dropdownMenu button {
+    z-index: 1003; /* Ensure dropdown is above the sidebar and other elements */
+}
+
+.dropdownMenu a,
+.dropdownMenu button {
     display: block;
     padding: 0.5rem 1rem;
     text-align: left;
     border: none;
     background: none;
     cursor: pointer;
-  }
-  
-  .dropdownMenu a:hover,
-  .dropdownMenu button:hover {
+}
+
+.dropdownMenu a:hover,
+.dropdownMenu button:hover {
     background-color: #f0f0f0;
-  }
-  
+}

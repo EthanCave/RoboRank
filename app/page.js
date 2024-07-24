@@ -1,5 +1,5 @@
-// app/home/page.js
 import styles from './page.module.css'; // Import CSS module
+
 
 export default function Home() {
   return (
@@ -23,9 +23,8 @@ export default function Home() {
           <p>Gain insights and analytics to make informed decisions.</p>
         </div>
       </section>
-      <footer className={styles.footer}>
-        <p>&copy; 2024 VexTeamLink. All rights reserved.</p>
-      </footer>
+
     </div>
+    
   );
 }
