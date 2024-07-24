@@ -1,0 +1,87 @@
+/* Navbar.module.css */
+.messagesIcon {
+    width: 30px; /* Adjust size as needed */
+    height: 30px; /* Adjust size as needed */
+    cursor: pointer;
+    margin-right: 40px; /* Space between icons */
+  }
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .searchForm {
+    display: flex;
+    align-items: center;
+    flex: 1; /* Allow the form to grow */
+    max-width: 600px; /* Set a max-width for the form */
+  }
+  
+  .searchInput {
+    flex: 1; /* Allow the input to grow */
+    padding: 0.75rem 1rem; /* Increase padding for a larger input */
+    border: 1px solid #555;
+    border-radius: 50px; /* Tapered edges */
+    background-color: #444;
+    color: #fff;
+    font-size: 1rem; /* Larger font size */
+    outline: none; /* Remove default outline */
+    transition: border-color 0.3s; /* Smooth border color transition */
+  }
+  
+  .searchInput::placeholder {
+    color: #bbb;
+  }
+  
+  .searchInput:focus {
+    border-color: #888; /* Change border color on focus */
+  }
+  
+  .auth {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profileContainer {
+    position: relative;
+  }
+  
+  .profilePic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .dropdownMenu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .dropdownMenu a,
+  .dropdownMenu button {
+    display: block;
+    padding: 0.5rem 1rem;
+    text-align: left;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+  .dropdownMenu a:hover,
+  .dropdownMenu button:hover {
+    background-color: #f0f0f0;
+  }
+  
