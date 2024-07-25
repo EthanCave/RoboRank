@@ -1,5 +1,4 @@
-"use client";
-
+'use client'
 import { useState, useEffect, useContext, useCallback } from 'react';
 import { auth, firestore, googleAuthProvider } from '../lib/firebase';
 import { UserContext } from '../lib/context';
@@ -53,7 +52,7 @@ function UsernameForm() {
     const teamDoc = firestore.doc(`teams/${teamNumber}`);
 
     const batch = firestore.batch();
-    batch.set(userDoc, { username: formValue, photoURL: user.photoURL, displayName: user.displayName, teamNumber: null });
+    batch.set(userDoc, { username: formValue, photoURL: user.photoURL, displayName: user.displayName, teamNumber });
     batch.set(usernameDoc, { uid: user.uid });
 
     if (teamExists) {
@@ -65,8 +64,28 @@ function UsernameForm() {
         displayName: user.displayName
       });
     } else {
-      // Create a new team
-      batch.set(teamDoc, { teamNumber, createdBy: user.uid });
+      // Fetch team details and create a new team
+      const teamDetails = await fetchTeamDetails(teamNumber);
+      if (teamDetails) {
+        batch.set(teamDoc, { 
+          teamNumber, 
+          createdBy: user.uid,
+          name: teamDetails.team_name,
+          id: teamDetails.id,
+          grade: teamDetails.grade,
+          city: teamDetails.location.city,
+          region: teamDetails.location.region,
+          country: teamDetails.location.country,
+          organization: teamDetails.organization,
+          robotName: teamDetails.robot_name,
+          members: [{
+            uid: user.uid,
+            username: formValue,
+            photoURL: user.photoURL,
+            displayName: user.displayName,
+          }]
+        });
+      }
     }
 
     await batch.commit();
@@ -109,6 +128,29 @@ function UsernameForm() {
     }, 500),
     []
   );
+
+  const fetchTeamDetails = async (teamNumber) => {
+    const apiToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIzIiwianRpIjoiMGI1MDhlNTEzZjEzNTk0ZjdkM2Y5NTQzNTM0MmJlNjBiOTI2ODI5ZTI1YWRiYmU5OGQyOWU4OTY1Y2ZlZWJjNjc5YTgxY2Y5MzgwZGNhNDkiLCJpYXQiOjE3MjE4NTc1NDIuMDgzNzY1LCJuYmYiOjE3MjE4NTc1NDIuMDgzNzY5MSwiZXhwIjoyNjY4NTQ1OTQyLjA3ODIyMTgsInN1YiI6IjEyNzgxNCIsInNjb3BlcyI6W119.Yrxi95Egb8P8cDD7mfPGwYMMBn6UtYRD9eI2XMcAr0x_bbKF58DC1QdAUIiN_mM4-D9B3dJNKSSzx__-xsQQolJUb9xjVs3fDXkWYqyupwtYkl-nbBO5cora5ryd8Fl9MT_-x71PN_LtaeOstYlTWPvRZjNNgxNhPH4-PA5ij0nzgcTc8MPQLcEg8TSVA0_YmvU_I8UVLweRxjG8OypEIysHfsHDSQhrmPFWf0Bup6gD6HFay1P0owkuQPaIrQKxnOgmmClqbWg30d3lxQdah4jQOseP_XAwPqdTVX-Q2ZxkxkDDE2LXlaR7GZQVG9c8rPbUh_vJeHNuGNPWb4P3dyVCcGk90RrFFYVCZ9bS7D2Xeke_Ciz8jiHxhYftz5IKBR9YLMdFAAYdh08hOTXLHS2AY9IuOUCdGbksxkeA9zhtRFyqCRN5cji88WKO8kL5HyO0M-0mLCk5EI6o5dj-qqWJsQ7omjOQ5Q_CNXAp8YeC6bDQwGMLvSiNR6dP3Res4b-D86X7O2Uy0BFbQEBsct0h33jQdqLVQuYB9UaWKNecbd1F8niKGWgzP6IKN75Ps8Waskq3ipJmO1_3DBo9EB7EReMxqOvBcs1YWLFizAPiUG7k9zF1zB_-XQtC-3piTTQbXquQHlakC8YW9RgeeK9d0CK1ZYosfzDvv7ndwgg'; // Replace with your actual API token
+  
+    try {
+      const response = await fetch(`https://www.robotevents.com/api/v2/teams?number%5B%5D=${teamNumber}&myTeams=false`, {
+        headers: {
+          'Authorization': `Bearer ${apiToken}`,
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error fetching team details: ${response.statusText}`);
+      }
+  
+      const data = await response.json();
+      return data.data[0];
+    } catch (error) {
+      console.error('Failed to fetch team details:', error);
+      return null; // Return null or handle the error accordingly
+    }
+  };
 
   return (
     !username && (

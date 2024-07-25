@@ -1,102 +1,155 @@
-/* Team.module.css */
-
 .teamContainer {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-family: 'Arial', sans-serif;
-  }
-  
-  .teamName {
-    font-size: 2em;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #333;
-  }
-  
-  .tabs {
     display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-  }
-  
-  .tabs button {
-    padding: 10px 20px;
-    font-size: 1em;
+    flex-direction: column;
+    height: 100%;
+}
+
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+}
+
+.tabs button {
+    flex: 1;
+    padding: 10px;
+    background: none;
     border: none;
-    background-color: transparent;
     cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: border-color 0.3s, color 0.3s;
-  }
-  
-  .tabs button:hover {
-    color: #0070f3;
-  }
-  
-  .tabs button.active {
+    text-align: center;
+}
+
+.tabs .active {
+    font-weight: bold;
     border-bottom: 2px solid #0070f3;
-    color: #0070f3;
-  }
-  
-  .tabContent {
+}
+
+.contentWrapper {
+    display: flex;
+    flex-direction: row;
     padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .detailsHeader {
-    font-size: 1.5em;
-    margin-bottom: 15px;
-    color: #333;
-  }
-  
-  .requestList {
+    gap: 20px; /* Space between the containers */
+}
+
+.teamDetailsContainer, .membersContainer {
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.teamDetailsContainer {
+    flex: 2;
+}
+
+.membersContainer {
+    flex: 1;
+}
+
+
+
+.detailsList {
+    display: flex;
+    flex-direction: column;
+}
+
+.detailItem {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.detailLabel {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.memberList {
+    list-style: none;
+    padding: 0;
+}
+
+.memberItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.memberPhoto {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.memberInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.requestList {
+    list-style: none;
+    padding: 0;
+}
+
+.requestItem {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.buttonAccept, .buttonReject {
+    padding: 5px 10px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+.requestsContainer {
+    background: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+}
+
+.requestsHeader {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.requestList {
     list-style: none;
     padding: 0;
     margin: 0;
-  }
-  
-  .requestItem {
-    padding: 10px;
-    border-bottom: 1px solid #eaeaea;
+}
+
+.requestItem {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  
-  .requestItem:last-child {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.requestItem:last-child {
     border-bottom: none;
-  }
-  
-  .button {
-    padding: 8px 16px;
-    font-size: 0.9em;
+}
+
+.requestUsername {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.buttonAccept, .buttonReject {
+    padding: 8px 12px;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px;
+    color: #fff;
     cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .buttonAccept {
-    background-color: #4caf50;
-    color: white;
-  }
-  
-  .buttonReject {
-    background-color: #f44336;
-    color: white;
-  }
-  
-  .buttonAccept:hover {
-    background-color: #45a049;
-  }
-  
-  .buttonReject:hover {
-    background-color: #d32f2f;
-  }
-  
+    font-size: 0.875rem;
+}
+
+.buttonAccept {
+    background-color: #28a745; /* Green for accept */
+}
+
+.buttonReject {
+    background-color: #dc3545; /* Red for reject */
+}

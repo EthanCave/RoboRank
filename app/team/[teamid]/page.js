@@ -3,7 +3,7 @@
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, useState, useCallback } from 'react';
 import { auth, firestore } from '../../lib/firebase';
-import { arrayUnion, doc, updateDoc, getDoc, deleteDoc } from 'firebase/firestore';
+import { arrayUnion, doc, updateDoc, getDoc, deleteDoc, collection, getDocs } from 'firebase/firestore';
 import debounce from 'lodash.debounce';
 import styles from './Team.module.css';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -28,9 +28,9 @@ export default function TeamPage() {
     setLoading(true);
     try {
       console.log("Fetching team data for teamid:", teamid);
-      const teamRef = firestore.doc(`teams/${teamid}`);
-      const teamDoc = await teamRef.get();
-      if (teamDoc.exists) {
+      const teamRef = doc(firestore, `teams/${teamid}`);
+      const teamDoc = await getDoc(teamRef);
+      if (teamDoc.exists()) {
         const teamData = teamDoc.data();
         setTeamData(teamData);
         console.log("Team data fetched:", teamData);
@@ -47,13 +47,13 @@ export default function TeamPage() {
         console.log("Team members:", teamData.members);
 
         // Check if the user is a member of the team
-        if (teamData.members?.includes(userUid)) {
+        const isUserMember = teamData.members?.some(member => member.uid === userUid);
+        setIsMember(isUserMember);
+        if (isUserMember) {
           console.log("User is a member of the team.");
-          setIsMember(true);
           fetchJoinRequests(teamid);
         } else {
           console.log("User is not a member of the team.");
-          setIsMember(false);
         }
       } else {
         console.warn("Team not found. Redirecting to home.");
@@ -64,7 +64,7 @@ export default function TeamPage() {
     } finally {
       setLoading(false);
     }
-  }, 800), [user]);
+  }, 800), [user, router]);
 
   // Debounced function to fetch join requests
   const fetchJoinRequests = useCallback(debounce(async (teamid) => {
@@ -72,8 +72,8 @@ export default function TeamPage() {
 
     try {
       console.log("Fetching join requests for teamid:", teamid);
-      const requestsRef = firestore.collection(`teams/${teamid}/requests`);
-      const requestsSnapshot = await requestsRef.get();
+      const requestsRef = collection(firestore, `teams/${teamid}/requests`);
+      const requestsSnapshot = await getDocs(requestsRef);
       const requestData = requestsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       console.log("Join requests data:", requestData);
       setRequests(requestData);
@@ -105,7 +105,7 @@ export default function TeamPage() {
           
           // Update the team members array
           await updateDoc(teamRef, {
-            members: arrayUnion(requestData.uid) // Add user to team members
+            members: arrayUnion({ uid: requestData.uid, role: 'member' }) // Add user to team members with a role
           });
           
           // Update the user's teamNumber field
@@ -115,7 +115,7 @@ export default function TeamPage() {
           });
   
           // Delete the request
-          await deleteDoc(requestRef)
+          await deleteDoc(requestRef);
         }
       } else if (action === 'reject') {
         await deleteDoc(requestRef);
@@ -127,13 +127,11 @@ export default function TeamPage() {
       console.error(`Error processing request action (${action}):`, error);
     }
   };
-  
 
   if (loading) return <div>Loading...</div>;
 
   return (
     <div className={styles.teamContainer}>
-      <h1 className={styles.teamName}>{teamData?.name}</h1>
       <div className={styles.tabs}>
         <button onClick={() => setActiveTab('details')} className={activeTab === 'details' ? styles.active : ''}>
           Team Details
@@ -144,8 +142,11 @@ export default function TeamPage() {
           </button>
         )}
       </div>
-      <div className={styles.tabContent}>
-        {activeTab === 'details' && <TeamDetails teamData={teamData} />}
+      <div className={styles.contentWrapper}>
+        <div className={styles.teamDetailsContainer}>
+          {activeTab === 'details' && <TeamDetails teamData={teamData} />}
+        </div>
+        {activeTab === 'details' && <div className={styles.membersContainer}><MemberList members={teamData?.members} /></div>}
         {activeTab === 'requests' && isMember && <JoinRequests requests={requests} onAction={handleRequestAction} />}
       </div>
     </div>
@@ -154,32 +155,84 @@ export default function TeamPage() {
 
 function TeamDetails({ teamData }) {
   return (
-    <div>
-      <h2 className={styles.detailsHeader}>Team Details</h2>
-      <p>Team Name: {teamData?.name}</p>
-      <p>Team Number: {teamData?.teamNumber}</p>
-      <p>Created by: {teamData?.createdBy}</p>
+    <div className={styles.teamDetails}>
+      <div className={styles.teamHeader}>
+        <h1 className={styles.teamName}>{teamData?.name}</h1>
+        <p className={styles.teamNumber}>Team Number: {teamData?.teamNumber}</p>
+      </div>
+      <div className={styles.detailsList}>
+        <div className={styles.detailItem}>
+          <span className={styles.detailLabel}>Created by:</span>
+          <span className={styles.detailValue}>{teamData?.createdBy}</span>
+        </div>
+        <div className={styles.detailItem}>
+          <span className={styles.detailLabel}>Grade:</span>
+          <span className={styles.detailValue}>{teamData?.grade}</span>
+        </div>
+        <div className={styles.detailItem}>
+          <span className={styles.detailLabel}>City:</span>
+          <span className={styles.detailValue}>{teamData?.city}</span>
+        </div>
+        <div className={styles.detailItem}>
+          <span className={styles.detailLabel}>Country:</span>
+          <span className={styles.detailValue}>{teamData?.country}</span>
+        </div>
+        <div className={styles.detailItem}>
+          <span className={styles.detailLabel}>Organization:</span>
+          <span className={styles.detailValue}>{teamData?.organization}</span>
+        </div>
+        <div className={styles.detailItem}>
+          <span className={styles.detailLabel}>Region:</span>
+          <span className={styles.detailValue}>{teamData?.region}</span>
+        </div>
+        <div className={styles.detailItem}>
+          <span className={styles.detailLabel}>Robot Name:</span>
+          <span className={styles.detailValue}>{teamData?.robotName || 'N/A'}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function MemberList({ members }) {
+  return (
+    <div className={styles.memberListContainer}>
+      <h2 className={styles.membersHeader}>Members</h2>
+      <ul className={styles.memberList}>
+        {members?.map((member, index) => (
+          <li key={index} className={styles.memberItem}>
+            <img className={styles.memberPhoto} src={member.photoURL} alt={member.displayName} />
+            <div className={styles.memberInfo}>
+              <span className={styles.memberName}>{member.displayName}</span>
+              <span className={styles.memberUsername}>Username: {member.username}</span>
+              <span className={styles.memberRole}>Role: {member.role || 'N/A'}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
 function JoinRequests({ requests, onAction }) {
-  return (
-    <div>
-      <h2 className={styles.detailsHeader}>Pending Join Requests</h2>
-      {requests.length > 0 ? (
-        <ul>
-          {requests.map(request => (
-            <li key={request.id}>
-              {request.username} ({request.uid})
-              <button className={styles.accept} onClick={() => onAction(request.id, 'accept')}>Accept</button>
-              <button className={styles.reject} onClick={() => onAction(request.id, 'reject')}>Reject</button>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No pending requests</p>
-      )}
-    </div>
-  );
+    return (
+        <div className={styles.requestsContainer}>
+            <h2 className={styles.requestsHeader}>Pending Join Requests</h2>
+            <ul className={styles.requestList}>
+                {requests.length > 0 ? (
+                    requests.map(request => (
+                        <li key={request.id} className={styles.requestItem}>
+                            <span className={styles.requestUsername}>{request.username}</span>
+                            <div>
+                                <button className={styles.buttonAccept} onClick={() => onAction(request.id, 'accept')}>✓</button>
+                                <button className={styles.buttonReject} onClick={() => onAction(request.id, 'reject')}>✗</button>
+                            </div>
+                        </li>
+                    ))
+                ) : (
+                    <p>No pending requests</p>
+                )}
+            </ul>
+        </div>
+    );
 }
