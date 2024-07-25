@@ -61,6 +61,11 @@ const Search = () => {
     router.push(`/messages?recipientId=${recipient.id}&type=${recipient.type}`);
   };
 
+  const handleTeamClick = (teamNumber) => {
+    // Navigate to team page
+    router.push(`/team/${teamNumber}`);
+  };
+
   const generateGradientBackground = () => {
     const colors = [
       '#ff9a9e', '#fad0c4', '#fad0c4', '#fbc2eb', '#a18cd1', '#fbc2eb', '#a6c0fe',
@@ -115,7 +120,9 @@ const Search = () => {
                       fontSize: '24px',
                       color: '#fff',
                       fontWeight: 'bold',
+                      cursor: 'pointer', // Indicate that it's clickable
                     }}
+                    onClick={() => handleTeamClick(teamNumber)} // Handle click event
                   >
                     {team.photoURL ? (
                       <img src={team.photoURL} alt={team.name} />
