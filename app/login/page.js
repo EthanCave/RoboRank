@@ -4,10 +4,12 @@ import { auth, firestore, googleAuthProvider } from '../lib/firebase';
 import { UserContext } from '../lib/context';
 import debounce from 'lodash.debounce';
 import styles from './Login.module.css';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 export default function Enter() {
   const { user, username } = useContext(UserContext);
-
+  const router = useRouter();
   return (
     <main className={styles.container}>
       <div className={styles.card}>
@@ -40,7 +42,7 @@ function UsernameForm() {
   const [isValid, setIsValid] = useState(false);
   const [loading, setLoading] = useState(false);
   const [teamExists, setTeamExists] = useState(null);
-
+  const router = useRouter();
   const { user, username } = useContext(UserContext);
 
   const onSubmit = async (e) => {
@@ -62,7 +64,10 @@ function UsernameForm() {
         uid: user.uid,
         photoURL: user.photoURL,
         displayName: user.displayName
-      });
+      }
+      );
+      toast.success('Request Sent!')
+      router.push(`/`);
     } else {
       // Fetch team details and create a new team
       const teamDetails = await fetchTeamDetails(teamNumber);
@@ -86,6 +91,8 @@ function UsernameForm() {
           }]
         });
       }
+      toast.success('Team Created!')
+      router.push(`/team/${teamNumber}`);
     }
 
     await batch.commit();
