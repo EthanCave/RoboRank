@@ -1,0 +1,254 @@
+.button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.monthNavigation {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.monthName {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.filterDropdownContainer {
+  position: relative;
+}
+
+.filterDropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.weekDays {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  font-weight: bold;
+  border-bottom: 2px solid #ddd;
+}
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.calendarDays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.calendarDay {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.calendarDay:hover {
+  background-color: #f1f1f1;
+}
+
+.dayNumber {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.events {
+  margin-top: 10px;
+}
+
+.event {
+  background-color: #007bff;
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.event:hover {
+  background-color: #0056b3;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.monthNavigation {
+  display: flex;
+  align-items: center;
+}
+
+.monthName {
+  margin: 0 10px;
+  font-size: 1.5em;
+}
+
+.filterDropdownContainer {
+  position: relative;
+}
+
+.filterDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 10;
+}
+
+.filterDropdown label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+  width: 100%;
+}
+
+.weekDays {
+  display: contents;
+  font-weight: bold;
+  text-align: center;
+}
+
+.calendarDays {
+  display: contents;
+}
+
+.calendarDay {
+  background-color: #f4f4f4;
+  border-radius: 5px;
+  padding: 10px;
+  min-height: 80px;
+  position: relative;
+}
+
+.dayNumber {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.emptyDay {
+  visibility: hidden;
+}
+
+.events {
+  margin-top: 5px;
+}
+
+.event {
+  margin-bottom: 5px;
+}
+
+.event button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 5px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.9em;
+  width: 100%;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.event button:hover {
+  background-color: #0056b3;
+}
+
+.eventDetails {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.eventDetails h2 {
+  margin-top: 0;
+}
+
+.eventDetails ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.eventDetails li {
+  padding: 5px 0;
+}
+
+.filterButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.hamburgerIcon {
+  stroke: #007bff;
+  transition: stroke 0.3s ease;
+}
+
+.filterButton:hover .hamburgerIcon {
+  stroke: #0056b3;
+}
