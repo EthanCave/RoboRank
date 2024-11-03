@@ -1,5 +1,5 @@
 # RoboRank
-VexTeamLink is a comprehensive web application designed to facilitate team management and collaboration for VEX Robotics teams. This platform includes a variety of features to help teams communicate, manage resources, and strategize for competitions.
+RoboRank is a comprehensive web application designed to facilitate team management and collaboration for VEX Robotics teams. This platform includes a variety of features to help teams communicate, manage resources, and strategize for competitions.
 
 ## Features
 User Authentication
