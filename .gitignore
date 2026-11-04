@@ -8,3 +8,5 @@
 CLAUDE.md
 # Local SQLite database (notes + season index)
 /data/
+# Old user accounts with password hashes; nothing reads this
+/app/data/users.json
