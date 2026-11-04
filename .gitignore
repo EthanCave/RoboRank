@@ -5,3 +5,6 @@
 # React Router
 /.react-router/
 /build/
+CLAUDE.md
+# Local SQLite database (notes + season index)
+/data/

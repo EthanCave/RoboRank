@@ -1,0 +1,15 @@
+services:
+  roborank:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      DATA_DIR: /data
+    volumes:
+      - roborank-data:/data
+    restart: unless-stopped
+
+volumes:
+  roborank-data:
